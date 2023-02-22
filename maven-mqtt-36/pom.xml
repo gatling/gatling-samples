@@ -2,42 +2,41 @@
      xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
     <groupId>io.gatling.demo</groupId>
-  <artifactId>maven-scala-34</artifactId>
+  <artifactId>maven-mqtt-36</artifactId>
   <version>0.0.1-SNAPSHOT</version>
-
-  <properties>
-    <maven.compiler.source>1.8</maven.compiler.source>
-    <maven.compiler.target>1.8</maven.compiler.target>
-    <encoding>UTF-8</encoding>
-
-    <gatling.version>3.4.2</gatling.version>
-    <scala-maven-plugin.version>4.8.0</scala-maven-plugin.version>
-    <gatling-maven-plugin.version>4.2.8</gatling-maven-plugin.version>
-  </properties>
 
   <dependencies>
     <dependency>
       <groupId>io.gatling.highcharts</groupId>
       <artifactId>gatling-charts-highcharts</artifactId>
-      <version>${gatling.version}</version>
+      <version>3.6.1</version>
       <scope>test</scope>
     </dependency>
   </dependencies>
 
   <build>
-    <sourceDirectory>src/main/scala</sourceDirectory>
+    <!-- so maven compiles src/test/scala and not only src/test/java -->
     <testSourceDirectory>src/test/scala</testSourceDirectory>
     <plugins>
       <plugin>
+        <artifactId>maven-jar-plugin</artifactId>
+        <version>3.2.0</version>
+      </plugin>
+      <!-- so maven can compile your scala code -->
+      <plugin>
         <groupId>net.alchim31.maven</groupId>
         <artifactId>scala-maven-plugin</artifactId>
-        <version>${scala-maven-plugin.version}</version>
+        <version>4.4.1</version>
         <executions>
           <execution>
             <goals>
               <goal>testCompile</goal>
             </goals>
             <configuration>
+              <recompileMode>all</recompileMode>
+              <jvmArgs>
+                <jvmArg>-Xss100M</jvmArg>
+              </jvmArgs>
               <args>
                 <arg>-target:jvm-1.8</arg>
                 <arg>-deprecation</arg>
@@ -50,10 +49,19 @@
           </execution>
         </executions>
       </plugin>
+
+      <!-- so maven can build a package for Gatling Enterprise -->
       <plugin>
-        <groupId>io.gatling</groupId>
-        <artifactId>gatling-maven-plugin</artifactId>
-        <version>${gatling-maven-plugin.version}</version>
+        <groupId>io.gatling.frontline</groupId>
+        <artifactId>frontline-maven-plugin</artifactId>
+        <version>1.2.3</version>
+        <executions>
+          <execution>
+            <goals>
+              <goal>package</goal>
+            </goals>
+          </execution>
+        </executions>
       </plugin>
     </plugins>
   </build>

@@ -14,17 +14,8 @@ class GatlingIoWorkload extends Simulation {
     .repeat(3) {
       exec(http("home").get("/"))
         .pause(1)
-        .exec(http("aaa").get("/"))
-        .pause(1)
-        .exec(http("zzz").get("/"))
-        .pause(1)
-        .exec(http("bbb").get("/"))
-        .pause(1)
     }
 
-  setUp(scn.inject(
-    //constantUsersPerSec(2).during(10)
-    atOnceUsers(1)
-  ))
+  setUp(scn.inject(constantUsersPerSec(2) during (10)))
     .protocols(httpProtocol)
 }

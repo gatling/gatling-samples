@@ -1,0 +1,5 @@
+<Envelope xmlns="http://schemas.xmlsoap.org/soap/envelope/">
+  <Body>
+    <sayHello xmlns="http://xsmeral.fi.muni.cz/echoapp/ws"/>
+  </Body>
+</Envelope>

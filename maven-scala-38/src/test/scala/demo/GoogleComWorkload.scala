@@ -4,10 +4,10 @@ import io.gatling.core.Predef._
 import io.gatling.http.Predef._
 import scala.concurrent.duration._
 
-class GatlingIoWorkload extends Simulation {
+class GoogleComWorkload extends Simulation {
 
   val httpProtocol = http
-    .baseUrl("https://gatling.io")
+    .baseUrl("https://google.com")
     .acceptEncodingHeader("gzip, deflate")
 
   val scn = scenario("scenario")
